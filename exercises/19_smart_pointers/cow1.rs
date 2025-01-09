@@ -39,7 +39,7 @@ mod tests {
         let mut input = Cow::from(&vec);
         abs_all(&mut input);
         // TODO: Replace `todo!()` with `Cow::Owned(_)` or `Cow::Borrowed(_)`.
-        assert!(matches!(input, Cow::Owned(_)));
+        assert!(matches!(input, Cow::Borrowed(_)));
     }
 
     #[test]
