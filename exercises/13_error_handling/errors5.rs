@@ -46,11 +46,41 @@ impl PositiveNonzeroInteger {
     }
 }
 
-// TODO: Add the correct return type `Result<(), Box<dyn ???>>`. What can we
+// TODO: Add the correct return type `Result<(), Box<dyn Error>>`. What can we
 // use to describe both errors? Is there a trait which both errors implement?
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::num::IntErrorKind;
+
+    #[test]
+    fn test_creation() {
+        assert_eq!(
+            PositiveNonzeroInteger::new(10),
+            Ok(PositiveNonzeroInteger(10)),
+        );
+        assert_eq!(
+            PositiveNonzeroInteger::new(-10),
+            Err(CreationError::Negative),
+        );
+        assert_eq!(PositiveNonzeroInteger::new(0), Err(CreationError::Zero));
+    }
+
+    #[test]
+    fn test_parse_error() {
+        let result = main();
+        assert!(result.is_ok());
+
+        let pretend_user_input = "beep boop";
+        let x: Result<i64, _> = pretend_user_input.parse();
+        assert!(x.is_err());
+        assert_eq!(*x.unwrap_err().kind(), IntErrorKind::InvalidDigit);
+    }
 }
