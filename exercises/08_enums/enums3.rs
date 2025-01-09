@@ -44,8 +44,7 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: Create a match expression to process the different message
-        // variants using the methods defined above.
+        // Create a match expression to process the different message variants using the methods defined above.
         match message {
             Message::Resize { width, height } => self.resize(width, height),
             Message::Move(point) => self.move_position(point),
@@ -91,5 +90,26 @@ mod tests {
         assert_eq!(state.message, "Hello world!");
         assert_eq!(state.color, (255, 0, 255));
         assert!(state.quit);
+    }
+
+    // Optional: Additional test cases
+    #[test]
+    fn test_initial_state() {
+        let state = State {
+            width: 0,
+            height: 0,
+            position: Point { x: 0, y: 0 },
+            message: String::from("hello world"),
+            color: (0, 0, 0),
+            quit: false,
+        };
+
+        assert_eq!(state.width, 0);
+        assert_eq!(state.height, 0);
+        assert_eq!(state.position.x, 0);
+        assert_eq!(state.position.y, 0);
+        assert_eq!(state.message, "hello world");
+        assert_eq!(state.color, (0, 0, 0));
+        assert!(!state.quit);
     }
 }
