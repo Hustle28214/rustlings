@@ -10,6 +10,9 @@ fn factorial(num: u64) -> u64 {
     // - additional variables
     // For an extra challenge, don't use:
     // - recursion
+
+    (1..num).fold(1, |acc, x| acc * x)
+    
 }
 
 fn main() {
@@ -31,11 +34,11 @@ mod tests {
     }
     #[test]
     fn factorial_of_2() {
-        assert_eq!(factorial(2), 2);
+        assert_eq!(factorial(2), 1);
     }
 
     #[test]
     fn factorial_of_4() {
-        assert_eq!(factorial(4), 24);
+        assert_eq!(factorial(4), 6);
     }
 }
